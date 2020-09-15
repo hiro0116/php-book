@@ -6,17 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    public function initialize(array $config){
-        parent::initialize($config);
-
-        $this->setTable('questions');
-        $this->setDisplayField('id');
-        $this->PrimaryKey('id');
-
-        $this->addBehavior('Timestamp');
-
-        $this->hasMany('Answer', [
-            'foreignKey' => 'question_id'
-        ]);
-    }
+    protected $fillable = ['id', 'user_id', 'body', 'created_at', 'updated_at'];
 }

@@ -4,40 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Question;
+use App\Answer;
 
 class QuestionsController extends Controller
 {
 
     public function initialize(){
         parent::initialize();
+        $this->loadModel('Answer');
     }
 
     /**
      * 質問一覧ページ
     */
     public function index(){
-        $questions = Question::orderBy('created', 'desc')->get();
+        $questions = Question::orderBy('created_at', 'desc')->get();
         return view('index', ['questions' => $questions]);
-        $this->set(compact('questions'));
     }
 
     /**
-     * 質問投稿後一覧ページに遷移
+     * 質問を投稿
      */
-     public function add(){
-         $questions = $this->Questions->newEntity();
+    public function create(){
+        return view('create');
+    }
 
-         if ($this->request->is('post')){
-             $question = $this->Questions->patchEntity($question, $this->request->getData());
-             $question->user_id = 1;
+    public function store(Request $request){
+        $question = $request->validate(['question' => 'required|max:500']);
+        Question::create($question);
+        return redirect()->route('index');
+    }
 
-             if ($this->Questions->save($question)){
-                 $this->Flash->success('質問を投稿しました。');
-
-                 return $this->redirect(['action' => 'index']);
-             }
-             $this->Flash->error('質問の投稿に失敗しました。');
-         }
-         $this->set(compact('question'));
-     }
+    /**
+     * 質問詳細画面
+     */
+    public function show($id){
+        $question = Question::find($id);
+        return view('show', ['question' => $question]);
+    }
 }

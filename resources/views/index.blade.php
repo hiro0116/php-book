@@ -96,12 +96,12 @@
                             <div class="card-body">
                                 <p>{{$question->body}}</p>
                                 <p>
-                                    <small>{{$question->created}}</small>
+                                    <small>{{$question->created_at}}</small>
                                 </p>
                             </div>
                             <div class="card-footer text-right">
-                                <a href="#">詳細へ</a>
-                                <a href="#">削除する</a>
+                                <a href="{{route('show', ['id' => $question->id])}}">詳細へ</a>
+                                <a href="{{route('create')}}">削除する</a>
                             </div>
                         </div>
                     </div>

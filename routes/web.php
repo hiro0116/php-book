@@ -13,5 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', "QuestionsController@index");
+Route::get('/', "QuestionsController@index") -> name('index');
 
+Route::get('/create', "QuestionsController@create") -> name('create');
+Route::post('/store', "QuestionsController@store") -> name('store');
+
+Route::get('/show', "QuestionsController@show") -> name('show');
